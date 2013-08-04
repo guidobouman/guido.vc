@@ -1,189 +1,197 @@
-@import url(http://fonts.googleapis.com/css?family=Quicksand);
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600);
 @import url(http://fonts.googleapis.com/css?family=Lato:100);
 
 *
 {
-	box-sizing 				: border-box;
+  box-sizing        : border-box;
 }
 
 html, body
 {
-	margin 					: 0;
-	padding 				: 0;
-	height 					: 100%;
+  margin            : 0;
+  padding           : 0;
+  height            : 100%;
 }
 
 body
 {
-	font-size 				: 30px;
-	color 					: #ffffff;
-	font-family 			: 'Quicksand', sans-serif;
-	font-weight 			: 300;
-	cursor 					: default;
-	background 				: #888888;
+  font-size         : 30px;
+  color             : #ffffff;
+  font-family       : 'Source Sans Pro', 'Helvetica Neue', HelveticaNeue, Helvetica, sans-serif;
+  font-weight       : 100;
+  font-size         : 1em;
+  line-height       : 0.9em;
+  background        : #888888;
 }
 
-h1, h2, h3, h4, h5
+h1, #menu
 {
-	margin 					: 0;
-	font-family 			: 'Lato';
-	font-weight 			: 100;
-	text-transform 			: lowercase;
-	font-size 				: 1em;
-	line-height 			: 0.9em;
+  margin            : 0;
+  font-family       : 'Lato';
+  font-weight       : 100;
+  text-transform    : uppercase;
+  font-size         : 1em;
+  line-height       : 0.9em;
 }
 
-h1
+h2, h3, h4, h5
 {
-	text-transform 			: uppercase;
+  margin            : 0;
+  font-weight       : 100;
+  color             : #f0f0f0;
+}
+
+h2 strong
+{
+  font-weight       : 600;
+  color             : rgba(255,255,255,0.4)
 }
 
 a
 {
-	color 					: inherit;
-	text-decoration 		: none;
+  color             : inherit;
+  text-decoration   : none;
 }
 
 a:hover,
 a:focus,
 a.active
 {
-	outline 				: none;
-/* 	border-bottom 			: 3px solid rgba(0,0,0,0.15); */
+  outline           : none;
+/*  border-bottom       : 3px solid rgba(0,0,0,0.15); */
 }
 
 header,
 footer
 {
-	display 				: none;
+  display           : none;
+}
+
+section
+{
 }
 
 section > div
 {
-	padding 				: 50px 60px;
+  padding           : 50px 60px;
 }
 
 section.home
 {
-	background 				: #dfa10b;
+  background-color  : #e84c3d;
 }
 
 section.home .top
 {
-	padding-bottom 			: 25px;
+  padding-bottom    : 25px;
 }
 
 section.home .top .first_name,
 section.home .top .last_name
 {
-	display 				: block;
-	line-height 			: 0.9em;
+  display           : block;
+  line-height       : 0.9em;
 }
 
 section.home .bottom
 {
-	padding-top 			: 25px;
-	background 				: rgba(0,0,0,0.15);
+  padding-top       : 25px;
+  background        : rgba(0,0,0,0.15);
 }
 
 section.home .bottom h2
 {
-	font-size 				: 24px;
+  font-size         : 24px;
+}
+
+section.work
+{
+  background-color  : #16a086;
+}
+
+section.contact
+{
+  background-color  : #34495e;
 }
 
 @media only screen and (min-width: 768px)
 {
-	body
-	{
-		overflow 				: hidden;
-		position 				: relative;
-	}
-	
-	#highlight
-	{
-		position 				: fixed;
-		top 					: -10px;
-		left 					: 0px;
-		width 					: 100px;
-		height 					: 3px;
-		background 				: rgba(0,0,0,0.15);
-		
-		opacity 				: 0;
-	}
-	
-	header,
-	footer
-	{
-		display 				: block;
-		overflow 				: hidden;
-		position 				: fixed;
-		top 					: 0;
-		left 					: 0;
-		width 					: 100%;
-		padding 				: 50px 60px;
-		z-index 				: 9999;
-	}
-	
-	header #menu
-	{
-		float 					: right;
-		margin 					: 0;
-		padding 				: 0;
-		list-style 				: none;
-	}
-	
-	header #menu li
-	{
-		display 				: inline-block;
-		margin-left 			: 25px;
-	}
-	
-	section
-	{
-		overflow 				: hidden;
-		position 				: relative;
-		width 					: 100%;
-		height 					: 100%;
-	}
-	
-	section > div
-	{
-		overflow 				: hidden;
-		position 				: absolute;
-		top 					: 0;
-		left 					: 0;
-		width 					: 100%;
-		height					: 100%;
-	}
-	
-	section.home .top
-	{
-		height 					: 60%;
-	}
-	
-	section.home .top .name
-	{
-		position 				: absolute;
-		width 					: 100%;
-		bottom 					: 25px;
-	}
-	
-	section.home .bottom
-	{
-		height 					: 40%;
-		top 					: 60%;
-		padding 				: 25px 60px;
-	}
-	
-	footer
-	{
-		top 					: auto;
-		bottom 					: 0;
-		padding 				: 50px 60px;
-	}
-	
-	footer #navigation .next
-	{
-		float 					: right;
-	}
+  body
+  {
+  }
+
+  #highlight
+  {
+    position        : fixed;
+    top             : -10px;
+    right           : 0px;
+    width           : 100px;
+    height          : 3px;
+    background      : rgba(0,0,0,0.15);
+
+    opacity         : 0;
+  }
+
+  header
+  {
+    display         : block;
+    overflow        : hidden;
+    position        : fixed;
+    top             : 0;
+    left            : 0;
+    width           : 100%;
+    padding         : 50px 60px;
+    z-index         : 9999;
+  }
+
+  header #menu
+  {
+    float           : right;
+    margin          : 0;
+    padding         : 0;
+    list-style      : none;
+  }
+
+  header #menu li
+  {
+    display         : inline-block;
+    margin-left     : 25px;
+  }
+
+  section
+  {
+    overflow        : hidden;
+    position        : relative;
+    width           : 100%;
+    height          : 100%;
+  }
+
+  section > div
+  {
+    overflow        : hidden;
+    position        : absolute;
+    top             : 0;
+    left            : 0;
+    width           : 100%;
+    height          : 100%;
+  }
+
+  section.home .top
+  {
+    height          : 60%;
+  }
+
+  section.home .top .name
+  {
+    position        : absolute;
+    width           : 100%;
+    bottom          : 25px;
+  }
+
+  section.home .bottom
+  {
+    height          : 40%;
+    top             : 60%;
+    padding         : 25px 60px;
+  }
 }
