@@ -4,6 +4,7 @@
 *
 {
   box-sizing        : border-box;
+  -moz-box-sizing   : border-box;
 }
 
 html, body
@@ -69,6 +70,7 @@ footer
 
 section
 {
+  min-height        : 100%;
 }
 
 section > div
