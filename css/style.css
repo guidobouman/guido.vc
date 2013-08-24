@@ -17,12 +17,12 @@ html, body
 body
 {
   font-size         : 30px;
-  color             : #ffffff;
+  color             : #000000;
   font-family       : 'Source Sans Pro', 'Helvetica Neue', HelveticaNeue, Helvetica, sans-serif;
   font-weight       : 100;
   font-size         : 1em;
   line-height       : 0.9em;
-  background        : #888888;
+  background        : #ffffff;
 }
 
 h1, #menu
@@ -39,13 +39,15 @@ h2, h3, h4, h5
 {
   margin            : 0;
   font-weight       : 100;
-  color             : #f0f0f0;
+  font-size         : 1em;
+  line-height       : 0.9em;
+  color             : #222222;
 }
 
 h2 strong
 {
   font-weight       : 600;
-  color             : rgba(255,255,255,0.4)
+  color             : rgba(0,0,0,0.4)
 }
 
 a
@@ -79,9 +81,6 @@ section
 section > div
 {
   overflow          : hidden;
-  position          : absolute;
-  top               : 0;
-  left              : 0;
   width             : 100%;
   height            : 100%;
   padding           : 50px 60px;
@@ -89,50 +88,32 @@ section > div
 
 section.home
 {
-  background-color  : #e84c3d;
+  /*background-color  : #e84c3d;*/
+  display           : table;
 }
 
 section.home .top
 {
-  height            : 60%;
-  padding-bottom    : 25px;
+  display           : table-cell;
+  height            : auto;
+  vertical-align    : middle;
+  text-align        : center;
 }
 
-section.home .top .name
+section.home h2
 {
-  position          : absolute;
-  left              : 50px;
-  right             : 50px;
-  bottom            : 25px;
-}
-
-section.home .top .first_name,
-section.home .top .last_name
-{
-  display           : block;
-  line-height       : 0.9em;
-}
-
-section.home .bottom
-{
-  height            : 40%;
-  top               : 60%;
-  background        : rgba(0,0,0,0.15);
-}
-
-section.home .bottom h2
-{
-  font-size         : 24px;
+  padding-top       : 25px;
 }
 
 section.work
 {
-  background-color  : #16a086;
+  /*background-color  : #16a086;*/
+  background-color  : #f8f8f8; 
 }
 
 section.contact
 {
-  background-color  : #34495e;
+  /*background-color  : #34495e;*/
 }
 
 @media only screen and (min-width: 768px)

@@ -24,9 +24,8 @@ var init = function(narrow)
   if(!window.initialised)
   {
     window.initialised = true;
-    $('section.home .first_name').fitText(0.33, { maxFontSize: '120px' });
-    $('section.home .last_name').fitText(0.44, { maxFontSize: '120px' });
-    $('section.home h2').fitText(1.45, { maxFontSize: '24px' });
+    $('section.home h1').fitText(0.82, { maxFontSize: '120px' });
+    $('section.home h2').fitText(1.48, { maxFontSize: '24px' });
     $('section.work h1').fitText(0.30, { maxFontSize: '120px' });
     $('section.contact h1').fitText(0.475, { maxFontSize: '120px' });
   }
