@@ -44,12 +44,6 @@ h2, h3, h4, h5
   color             : #222222;
 }
 
-h2 strong
-{
-  font-weight       : 600;
-  color             : rgba(0,0,0,0.4)
-}
-
 a
 {
   color             : inherit;
@@ -76,6 +70,7 @@ section
   position          : relative;
   width             : 100%;
   min-height        : 100%;
+  border-top        : 3px solid rgba(0,0,0,0.15);
 }
 
 section > div
@@ -108,7 +103,7 @@ section.home h2
 section.work
 {
   /*background-color  : #16a086;*/
-  background-color  : #f8f8f8; 
+  /*background-color  : #f8f8f8; */
 }
 
 section.contact
