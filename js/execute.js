@@ -18,12 +18,6 @@ jQuery(function($) {
     $('.modal').fadeIn();
   });
 
-  $('a.close').on('click', function(e) {
-    e.preventDefault();
-
-    $('.modal').fadeOut();
-  });
-
   $('a.mail').on('click', function(e) {
     e.preventDefault();
 
@@ -31,7 +25,6 @@ jQuery(function($) {
     mail += 'm@';
     mail += 'guido';
     mail += '.vc';
-    // document.location.href = 'mailto:' + mail;
 
     $('.modal section').hide();
     $('.modal section.mail').show();
@@ -39,9 +32,19 @@ jQuery(function($) {
     $('.modal').fadeIn();
   });
 
+  $('.modal section.phone h1').on('click' , function() {
+    document.location.href = 'tel:' + $(this).html().replace(' ', '');
+  });
+
   $('.modal section.mail h1').on('click' , function() {
     document.location.href = 'mailto:' + $(this).html();
-  })
+  });
+
+  $('a.close').on('click', function(e) {
+    e.preventDefault();
+
+    $('.modal').fadeOut();
+  });
 
   /mobi/i.test(navigator.userAgent) && !location.hash && setTimeout(function () {
     if (!pageYOffset) window.scrollTo(0, 0);
