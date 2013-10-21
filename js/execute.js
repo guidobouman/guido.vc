@@ -96,10 +96,10 @@ var showModal = function(className) {
   }
   $('.modal').fadeIn();
 
-}
+};
 
 var hideModal = function() {
 
   $('.modal').fadeOut();
 
-}
+};
