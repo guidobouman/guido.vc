@@ -1,21 +1,35 @@
 jQuery(function($) {
 
-  $(window).resize(function() {
-    if($(this).width() < 750) {
-      narrow = true;
-    } else {
-      narrow = false;
+  $('body').panelSnap({
+    $menu: $('header'),
+    onSnapFinish: function() {
+      var self = this;
+
+      moveHighlight($('a.active'));
     }
+  });
 
-    init(narrow);
-  }).resize();
+  $('<div id="highlight"/>').appendTo('body');
 
+  $('header a').not('.no_highlight').on('mouseenter focusin', function(e) {
+    moveHighlight($(this));
+  }).on('mouseleave focusout', function(e) {
+    moveHighlight($('a.active'));
+  });
+
+  // Crappy FOUT rendering...
+  setTimeout(function() {
+
+    moveHighlight($('a.active'), 0);
+    $('#highlight').animate({opacity: 1},{queue: false, duration: 500});
+
+  }, 500);
+
+  // Register modals
   $('a.phone').on('click', function(e) {
     e.preventDefault();
 
-    $('.modal section').hide();
-    $('.modal section.phone').show();
-    $('.modal').fadeIn();
+    showModal('phone');
   });
 
   $('a.mail').on('click', function(e) {
@@ -25,11 +39,9 @@ jQuery(function($) {
     mail += 'm@';
     mail += 'guido';
     mail += '.vc';
-
-    $('.modal section').hide();
-    $('.modal section.mail').show();
     $('.modal section.mail h1').html(mail);
-    $('.modal').fadeIn();
+
+    showModal('mail');
   });
 
   $('.modal section.phone h1').on('click' , function() {
@@ -43,77 +55,19 @@ jQuery(function($) {
   $('a.close').on('click', function(e) {
     e.preventDefault();
 
-    $('.modal').fadeOut();
+    hideModal();
   });
 
+  // Hide addressbar on mobile
   /mobi/i.test(navigator.userAgent) && !location.hash && setTimeout(function () {
     if (!pageYOffset) window.scrollTo(0, 0);
   }, 100);
+
 });
 
-var init = function(narrow)
-{
-  if(!window.initialised)
-  {
-    window.initialised = true;
-    $('section.home h1').fitText(0.82, { maxFontSize: '120px' });
-    $('section.home h2').fitText(1.70, { maxFontSize: '24px' });
-    $('section.work h1').fitText(0.30, { maxFontSize: '120px' });
-    $('section.contact h1').fitText(0.475, { maxFontSize: '120px' });
+var moveHighlight = function($target, speed) {
 
-
-    $('body').panelSnap(
-    {
-      $menu: $('header'),
-      onSnapFinish: function()
-      {
-        var self = this;
-
-        moveHighlight($('a.active'));
-      }
-    });
-  }
-
-  if(narrow && window.wide_initialised)
-  {
-    window.wide_initialised = false;
-
-    $('#highlight').remove();
-
-    clearTimeout(window.delayedInit);
-  }
-  else if(!narrow && !window.wide_initialised)
-  {
-    window.wide_initialised = true;
-
-    $('<div id="highlight"/>').appendTo('body');
-
-    $('header a').not('.no_highlight').on('mouseenter focusin', function(e)
-    {
-      moveHighlight($(this));
-    }).on('mouseleave focusout', function(e)
-    {
-      moveHighlight($('a.active'));
-    });
-
-    // Crappy FOUT rendering...
-    window.delayedInit = setTimeout(function()
-    {
-      // Init highlightSnap
-      // Invoke scrollStop
-
-      moveHighlight($('a.active'), 0);
-      $('#highlight').animate({opacity: 1},{queue: false, duration: 500});
-
-      $(document).trigger('scrollstop');
-    }, 500);
-  }
-}
-
-var moveHighlight = function($target, speed)
-{
-  if(typeof(speed) == 'undefined')
-  {
+  if(typeof(speed) == 'undefined') {
     speed = 500;
   }
 
@@ -124,10 +78,28 @@ var moveHighlight = function($target, speed)
   var width = $target.width();
   var height = $target.height();
 
-  $('#highlight').stop('fx', true).animate(
-  {
+  $('#highlight').stop('fx', true).animate({
     top: offset.top - scrollTop + height,
     right: canvasWidth - width - offset.left,
     width: width
   }, speed);
+
+};
+
+var showModal = function(className) {
+
+  $('.modal section').hide();
+  if(className) {
+    $('.modal section.' + className).show();
+  } else {
+    $('.modal section:first').show();
+  }
+  $('.modal').fadeIn();
+
+}
+
+var hideModal = function() {
+
+  $('.modal').fadeOut();
+
 }
