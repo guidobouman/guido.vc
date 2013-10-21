@@ -89,7 +89,7 @@ section {
   left              : 0;
   right             : 0;
 
-  background        : rgba(255,255,255,1);
+  background        : rgb(255,255,255);
   z-index           : 2;
 }
 
@@ -99,6 +99,7 @@ section {
   width             : 100%;
   min-height        : 100%;
   padding           : 50px 0;
+  border-top        : 3px solid rgb(35,35,35);
   border-top        : 3px solid rgba(0,0,0,0.15);
 }
 
@@ -116,6 +117,7 @@ section .center {
 }
 
 section a {
+  background        : rgb(17,17,17);
   background        : rgba(0,0,0,0.075);
   padding           : 0 5px;
 }
@@ -129,6 +131,7 @@ section a:hover,
 section a:focus,
 section a:active,
 section a.active {
+  background        : rgb(35,35,35);
   background        : rgba(0,0,0,0.15);
 }
 
@@ -143,9 +146,10 @@ section.home h2 {
 #highlight {
   position          : fixed;
   top               : -10px;
-  right             : 0px;
+  right             : 0;
   width             : 100px;
   height            : 3px;
+  background        : rgb(35,35,35);
   background        : rgba(0,0,0,0.15);
   z-index           : 1;
   opacity           : 0;
