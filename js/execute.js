@@ -6,7 +6,8 @@ jQuery(function($) {
       var self = this;
 
       moveHighlight($('a.active'));
-    }
+    },
+    slideSpeed: 400
   });
 
   $('<div id="highlight"/>').appendTo('body');
