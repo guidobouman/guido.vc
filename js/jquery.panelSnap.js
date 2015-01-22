@@ -1,6 +1,5 @@
 // Utility for creating objects in older browsers
 if ( typeof Object.create !== 'function' ) {
-
   Object.create = function( obj ) {
 
     function F() {}
@@ -8,15 +7,14 @@ if ( typeof Object.create !== 'function' ) {
     return new F();
 
   };
-
 }
 
 /*!
  * jQuery panelSnap
- * Version 0.9.2
+ * Version 0.13.0
  *
  * Requires:
- * - jQuery 1.7.1 or higher (no jQuery.migrate needed)
+ * - jQuery 1.7 or higher (no jQuery.migrate needed)
  *
  * https://github.com/guidobouman/jquery-panelsnap
  *
@@ -48,17 +46,16 @@ if ( typeof Object.create !== 'function' ) {
   var storageName = 'plugin_' + pluginName;
 
   var pluginObject = {
+
     isMouseDown: false,
     isSnapping: false,
+    enabled: true,
     scrollInterval: 0,
     scrollOffset: 0,
 
     init: function(options, container) {
 
       var self = this;
-
-      self.$window = $(window);
-      self.$document = $(document);
 
       self.container = container;
       self.$container = $(container);
@@ -67,33 +64,26 @@ if ( typeof Object.create !== 'function' ) {
       self.$snapContainer = self.$container;
 
       if(self.$container.is('body')) {
+        self.$eventContainer = $(document);
+        self.$snapContainer = $(document.documentElement);
 
-        self.$eventContainer = self.$document;
         var ua = navigator.userAgent;
-
-        if(!~ua.indexOf("WebKit")) {
-
-          self.$snapContainer = $('html');
-
+        if(~ua.indexOf('WebKit')) {
+          self.$snapContainer = $('body');
         }
-
       }
 
-      self.scrollInterval = self.$container.height();
+      self.updateScrollInterval();
 
       self.options = $.extend(true, {}, $.fn.panelSnap.options, options);
 
       self.bind();
 
       if(self.options.$menu !== false && $('.active', self.options.$menu).length > 0) {
-
         $('.active', self.options.$menu).click();
-
       } else {
-
         var $target = self.getPanel(':first');
         self.activatePanel($target);
-
       }
 
       return self;
@@ -109,12 +99,14 @@ if ( typeof Object.create !== 'function' ) {
       self.bindProxied(self.$eventContainer, 'mousedown', self.mouseDown);
       self.bindProxied(self.$eventContainer, 'mouseup', self.mouseUp);
 
-      self.bindProxied(self.$window, 'resizestop', self.resize);
+      self.bindProxied($(window), 'resizestop', self.resize);
+
+      if(self.options.keyboardNavigation.enabled) {
+        self.bindProxied($(window), 'keydown', self.keyDown, self.$eventContainer);
+      }
 
       if(self.options.$menu !== false) {
-
         self.bindProxied($(self.options.$menu), 'click', self.captureMenuClick, self.options.menuSelector);
-
       }
 
     },
@@ -140,12 +132,10 @@ if ( typeof Object.create !== 'function' ) {
       // Gotta love namespaced events!
       self.$eventContainer.off(self.options.namespace);
 
-      self.$window.off(self.options.namespace);
+      $(window).off(self.options.namespace);
 
       if(self.options.$menu !== false) {
-
         $(self.options.menuSelector, self.options.$menu).off(self.options.namespace);
-
       }
 
       self.$container.removeData(storageName);
@@ -159,55 +149,84 @@ if ( typeof Object.create !== 'function' ) {
       e.stopPropagation();
 
       if(self.isMouseDown) {
-
-        self.$eventContainer.one('mouseup' + self.options.namespace, self.processScroll);
         return;
-
       }
 
       if(self.isSnapping) {
-
         return;
-
       }
 
-      var offset = self.$eventContainer.scrollTop();
+      self.updateScrollInterval();
+
+      var offset = self.$snapContainer.scrollTop();
       var scrollDifference = offset - self.scrollOffset;
       var maxOffset = self.$container[0].scrollHeight - self.scrollInterval;
-      var panelCount = self.getPanel().length;
+      var panelCount = self.getPanel().length - 1;
 
-      var child_number;
-      if(scrollDifference < -self.options.directionThreshold &&
-        scrollDifference > -self.scrollInterval) {
-
-        child_number = Math.floor(offset / self.scrollInterval);
-
-      } else if(scrollDifference > self.options.directionThreshold &&
-        scrollDifference < self.scrollInterval) {
-
-        child_number = Math.ceil(offset / self.scrollInterval);
-
+      var childNumber;
+      if(
+        self.enabled &&
+        scrollDifference < -self.options.directionThreshold &&
+        scrollDifference > -self.scrollInterval
+      ) {
+        childNumber = Math.floor(offset / self.scrollInterval);
+      } else if(
+        self.enabled &&
+        scrollDifference > self.options.directionThreshold &&
+        scrollDifference < self.scrollInterval
+      ) {
+        childNumber = Math.ceil(offset / self.scrollInterval);
       } else {
-
-        child_number = Math.round(offset / self.scrollInterval);
-
+        childNumber = Math.round(offset / self.scrollInterval);
       }
 
-      child_number = Math.max(0, Math.min(child_number, panelCount));
+      childNumber = Math.max(0, Math.min(childNumber, panelCount));
 
-      var $target = self.getPanel(':eq(' + child_number + ')');
+      var $target = self.getPanel(':eq(' + childNumber + ')');
 
-      if((scrollDifference === 0) ||
-        (scrollDifference < 100 && (offset < 0 || offset > maxOffset))) {
+      if(!self.enabled) {
+        if(!$target.is(self.getPanel('.active'))) {
+          self.activatePanel($target);
+        }
 
+        return;
+      }
+
+      // To get normal scrolling in panels taller than the viewport,
+      // stop if there's no multiple panels in viewport
+      if (self.getPanelsInViewport().length < 2)
+        return;
+
+      if(scrollDifference === 0) {
+        // Do nothing
+      } else if (offset <= 0 || offset >= maxOffset) {
+        // Only activate, prevent stuttering
         self.activatePanel($target);
-
+        // Set scrollOffset to a sane number for next scroll
+        self.scrollOffset = offset <= 0 ? 0 : maxOffset;
       } else {
-
         self.snapToPanel($target);
-
       }
 
+    },
+
+    getPanelsInViewport: function() {
+
+      var self = this;
+      var $window = $(window);
+
+      var viewport = { top: $window.scrollTop() };
+      viewport.bottom = viewport.top + $window.height();
+
+      var panels = self.getPanel().filter(function (_, el) {
+        var $el = $(el);
+        var bounds = $el.offset();
+        bounds.bottom = bounds.top + $el.outerHeight();
+
+        return !(viewport.bottom < bounds.top || viewport.top > bounds.bottom);
+      });
+
+      return panels;
     },
 
     mouseWheel: function(e) {
@@ -236,13 +255,53 @@ if ( typeof Object.create !== 'function' ) {
 
       self.isMouseDown = false;
 
+      if(self.scrollOffset !== self.$snapContainer.scrollTop()) {
+        self.scrollStop(e);
+      }
+
+    },
+
+    keyDown: function(e) {
+
+      var self = this;
+
+      var nav = self.options.keyboardNavigation;
+
+      if(!self.enabled) {
+        return;
+      }
+
+      if (self.isSnapping) {
+        if(e.which == nav.previousPanelKey || e.which == nav.nextPanelKey) {
+          e.preventDefault();
+          return false;
+        }
+
+        return;
+      }
+
+      switch(e.which) {
+        case nav.previousPanelKey:
+          e.preventDefault();
+          self.snapTo('prev', nav.wrapAround);
+          break;
+        case nav.nextPanelKey:
+          e.preventDefault();
+          self.snapTo('next', nav.wrapAround);
+          break;
+      }
+
     },
 
     resize: function(e) {
 
       var self = this;
 
-      self.scrollInterval = self.$container.height();
+      self.updateScrollInterval();
+
+      if(!self.enabled) {
+        return;
+      }
 
       var $target = self.getPanel('.active');
 
@@ -255,7 +314,7 @@ if ( typeof Object.create !== 'function' ) {
       var self = this;
 
       var panel = $(e.currentTarget).data('panel');
-      var $target = self.getPanel('[data-panel=' + panel + ']');
+      var $target = self.getPanel('[data-panel="' + panel + '"]');
 
       self.snapToPanel($target);
 
@@ -267,6 +326,10 @@ if ( typeof Object.create !== 'function' ) {
 
       var self = this;
 
+      if (!$target.jquery) {
+        return;
+      }
+
       self.isSnapping = true;
 
       self.options.onSnapStart.call(self, $target);
@@ -274,29 +337,26 @@ if ( typeof Object.create !== 'function' ) {
 
       var scrollTarget = 0;
       if(self.$container.is('body')) {
-
-        scrollTarget = $target.offset().top;
-
+        scrollTarget = $target.offset().top - self.options.offset;
       } else {
-
-        scrollTarget = self.$eventContainer.scrollTop() + $target.position().top;
-
+        scrollTarget = self.$snapContainer.scrollTop() + $target.position().top - self.options.offset;
       }
 
       self.$snapContainer.stop(true).animate({
         scrollTop: scrollTarget
-      }, self.options.slideSpeed, function() {
+      }, self.options.slideSpeed, self.options.easing, function() {
 
-        self.scrollOffset = scrollTarget;
+        // Set scrollOffset to scrollTop
+        // (not to scrollTarget since on iPad those sometimes differ)
+        self.scrollOffset = self.$snapContainer.scrollTop();
         self.isSnapping = false;
 
         // Call callback
         self.options.onSnapFinish.call(self, $target);
         self.$container.trigger('panelsnap:finish', [$target]);
 
+        self.activatePanel($target);
       });
-
-      self.activatePanel($target);
 
     },
 
@@ -304,18 +364,21 @@ if ( typeof Object.create !== 'function' ) {
 
       var self = this;
 
-      $('> ' + self.options.panelSelector + '.active', self.container).removeClass('active');
+      self.getPanel('.active').removeClass('active');
       $target.addClass('active');
 
       if(self.options.$menu !== false) {
+        var activeItemSelector = '> ' + self.options.menuSelector + '.active';
+        $(activeItemSelector, self.options.$menu).removeClass('active');
 
-        $(self.options.menuSelector + '.active', self.options.$menu).removeClass('active');
-
-        var itemSelector = self.options.menuSelector + '[data-panel=' + $target.data('panel') + ']';
-        var $activeItem = $(itemSelector, self.options.$menu);
-        $activeItem.addClass('active');
-
+        var attribute = '[data-panel="' + $target.data('panel') + '"]';
+        var itemSelector = '> ' + self.options.menuSelector + attribute;
+        var $itemToActivate = $(itemSelector, self.options.$menu);
+        $itemToActivate.addClass('active');
       }
+
+      self.options.onActivate.call(self, $target);
+      self.$container.trigger('panelsnap:activate', [$target]);
 
     },
 
@@ -324,13 +387,11 @@ if ( typeof Object.create !== 'function' ) {
       var self = this;
 
       if(typeof selector === 'undefined') {
-
         selector = '';
-
       }
 
-      var panel_selector = '> ' + self.options.panelSelector + selector;
-      return $(panel_selector, self.$container);
+      var panelSelector = (self.options.strictContainerSelection ? '> ' : '') + self.options.panelSelector + selector;
+      return $(panelSelector, self.$container);
 
     },
 
@@ -339,18 +400,15 @@ if ( typeof Object.create !== 'function' ) {
       var self = this;
 
       if(typeof wrap !== 'boolean') {
-
         wrap = true;
-
       }
 
       var $target;
 
       switch(target) {
-
         case 'prev':
 
-          $target = self.getPanel('.active').prev(self.options.panelSelector);
+          $target = self.getPanel('.active').prevAll(self.options.panelSelector).last();
           if($target.length < 1 && wrap)
           {
             $target = self.getPanel(':last');
@@ -359,7 +417,7 @@ if ( typeof Object.create !== 'function' ) {
 
         case 'next':
 
-          $target = self.getPanel('.active').next(self.options.panelSelector);
+          $target = self.getPanel('.active').nextAll(self.options.panelSelector).first();
           if($target.length < 1 && wrap)
           {
             $target = self.getPanel(':first');
@@ -375,74 +433,112 @@ if ( typeof Object.create !== 'function' ) {
 
           $target = self.getPanel(':last');
           break;
-
       }
 
       if($target.length > 0) {
-
         self.snapToPanel($target);
+      }
 
+    },
+
+    getScrollInterval: function () {
+
+      return this.$container.is('body') ? window.innerHeight : this.$container.height();
+    },
+
+    updateScrollInterval: function () {
+
+      this.scrollInterval = this.getScrollInterval();
+
+    },
+
+    enable: function() {
+
+      var self = this;
+
+      // Gather scrollOffset for next scroll
+      self.scrollOffset = self.$snapContainer.scrollTop();
+
+      self.enabled = true;
+
+    },
+
+    disable: function() {
+
+      var self = this;
+
+      self.enabled = false;
+
+    },
+
+    toggle: function() {
+
+      var self = this;
+
+      if(self.enabled) {
+        self.disable();
+      } else {
+        self.enable();
       }
 
     }
+
   };
 
   $.fn[pluginName] = function(options) {
+
     var args = Array.prototype.slice.call(arguments);
 
     return this.each(function() {
 
       var pluginInstance = $.data(this, storageName);
       if(typeof options === 'object' || options === 'init' || ! options) {
-
         if(!pluginInstance) {
-
           if(options === 'init') {
-
             options = args[1] || {};
-
           }
 
           pluginInstance = Object.create(pluginObject).init(options, this);
           $.data(this, storageName, pluginInstance);
-
         } else {
-
           $.error('Plugin is already initialized for this object.');
           return;
-
         }
-
       } else if(!pluginInstance) {
-
         $.error('Plugin is not initialized for this object yet.');
         return;
-
       } else if(pluginInstance[options]) {
-
         var method = options;
         options = args.slice(1);
         pluginInstance[method].apply(pluginInstance, options);
-
       } else {
-
         $.error('Method ' +  options + ' does not exist on jQuery.panelSnap.');
         return;
-
       }
 
     });
+
   };
 
-  $.fn.panelSnap.options = {
+  $.fn[pluginName].options = {
     $menu: false,
     menuSelector: 'a',
     panelSelector: 'section',
     namespace: '.panelSnap',
     onSnapStart: function(){},
     onSnapFinish: function(){},
+    onActivate: function(){},
     directionThreshold: 50,
-    slideSpeed: 200
+    slideSpeed: 200,
+    easing: 'linear',
+    offset: 0,
+    keyboardNavigation: {
+      enabled: false,
+      nextPanelKey: 40,
+      previousPanelKey: 38,
+      wrapAround: true
+    },
+    strictContainerSelection: true
   };
 
 })(jQuery, window, document);
@@ -489,6 +585,7 @@ if ( typeof Object.create !== 'function' ) {
       var $this = $(thisObject);
       var scrolling;
       var timer;
+      var isTouching;
 
       $this.data('scrollwatch', true);
 
@@ -499,7 +596,22 @@ if ( typeof Object.create !== 'function' ) {
 
       }
 
+      $this.on("touchstart", function(event) {
+        isTouching = true;
+      });
+
+      $this.on("touchleave touchcancel touchend", function(event) {
+        isTouching = false;
+        setTimeout(function () {
+          clearTimeout(timer);
+        }, 50);
+      });
+
       $this.on("touchmove scroll", function(event) {
+
+        if (isTouching) {
+          return;
+        }
 
         if(!$.event.special.scrollstart.enabled) {
           return;
@@ -517,7 +629,9 @@ if ( typeof Object.create !== 'function' ) {
         }, 50);
 
       });
+
     }
+
   };
 
   // Proxies scrollstart when needed
@@ -533,6 +647,7 @@ if ( typeof Object.create !== 'function' ) {
       }
 
     }
+
   };
 
 })(jQuery);
@@ -607,7 +722,9 @@ if ( typeof Object.create !== 'function' ) {
         }, 200);
 
       });
+
     }
+
   };
 
   // Proxies resizestart when needed
@@ -623,6 +740,7 @@ if ( typeof Object.create !== 'function' ) {
       }
 
     }
+
   };
 
 })(jQuery);
