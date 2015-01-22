@@ -368,11 +368,11 @@ if ( typeof Object.create !== 'function' ) {
       $target.addClass('active');
 
       if(self.options.$menu !== false) {
-        var activeItemSelector = '> ' + self.options.menuSelector + '.active';
+        var activeItemSelector = self.options.menuSelector + '.active';
         $(activeItemSelector, self.options.$menu).removeClass('active');
 
         var attribute = '[data-panel="' + $target.data('panel') + '"]';
-        var itemSelector = '> ' + self.options.menuSelector + attribute;
+        var itemSelector = self.options.menuSelector + attribute;
         var $itemToActivate = $(itemSelector, self.options.$menu);
         $itemToActivate.addClass('active');
       }
