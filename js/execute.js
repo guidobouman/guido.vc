@@ -2,7 +2,7 @@ jQuery(function($) {
 
   $('body').panelSnap({
     $menu: $('header'),
-    onSnapFinish: function() {
+    onActivate: function() {
       var self = this;
 
       moveHighlight($('a.active'));
