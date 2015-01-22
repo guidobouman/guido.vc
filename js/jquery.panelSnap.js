@@ -11,7 +11,7 @@ if ( typeof Object.create !== 'function' ) {
 
 /*!
  * jQuery panelSnap
- * Version 0.13.0
+ * Version 0.14.0
  *
  * Requires:
  * - jQuery 1.7 or higher (no jQuery.migrate needed)
@@ -390,8 +390,7 @@ if ( typeof Object.create !== 'function' ) {
         selector = '';
       }
 
-      var panelSelector = (self.options.strictContainerSelection ? '> ' : '') + self.options.panelSelector + selector;
-      return $(panelSelector, self.$container);
+      return $(self.options.panelSelector + selector, self.$container);
 
     },
 
@@ -523,7 +522,7 @@ if ( typeof Object.create !== 'function' ) {
   $.fn[pluginName].options = {
     $menu: false,
     menuSelector: 'a',
-    panelSelector: 'section',
+    panelSelector: '> section',
     namespace: '.panelSnap',
     onSnapStart: function(){},
     onSnapFinish: function(){},
@@ -537,8 +536,7 @@ if ( typeof Object.create !== 'function' ) {
       nextPanelKey: 40,
       previousPanelKey: 38,
       wrapAround: true
-    },
-    strictContainerSelection: true
+    }
   };
 
 })(jQuery, window, document);
