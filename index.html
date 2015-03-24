@@ -15,18 +15,18 @@
   <header>
     <ul id="menu">
       <li>
-        <a href="/" class="active" data-panel="home">
-          home
-        </a>
-      </li>
-      <li>
-        <a href="/work" data-panel="work">
+        <a class="work" href="/work">
           work
         </a>
       </li>
       <li>
-        <a href="/contact" data-panel="contact">
-          contact
+        <a class="phone" href="/phone">
+          phone
+        </a>
+      </li>
+      <li>
+        <a class="mail" href="/mail">
+          mail
         </a>
       </li>
     </ul>
@@ -37,39 +37,28 @@
       <h1>Guido Bouman</h1>
 
       <h2>
-        I design and develop human interactions and behaviors for the internet.
+        I create human interactions and behaviors for the internet.
       </h2>
     </div>
   </section>
 
-  <section class="work v-align" data-panel="work">
-    <div class="middle center">
-      <h1>My work</h1>
-
-      <p>
-        <!-- Slide right to continue reading &rarr; -->
-        Check out my <a href="http://dribbble.com/guidobouman">Dribbble</a> &amp; <a href="http://github.com/guidobouman">Github</a> for now.
-      </p>
-    </div>
-  </section>
-
-  <section class="contact v-align" data-panel="contact">
-    <div class="middle center">
-      <h1>Contact me</h1>
-
-      <p>
-        Just <a class="phone" href="/call">call</a> or <a class="mail" href="/mail">mail</a>. It's that simple.
-      </p>
-    </div>
-  </section>
-
   <div class="modal">
+    <section class="work v-align">
+      <div class="middle center">
+        <h1>My work</h1>
+
+        <p>
+          Check out my <a href="http://github.com/guidobouman">Github</a> for now.
+        </p>
+      </div>
+    </section>
+
     <section class="phone v-align">
       <div class="middle center">
         <h1>+31 6 42945687</h1>
 
         <p>
-          <a class="close" href="">Close</a>.
+          &nbsp;
         </p>
       </div>
     </section>
@@ -79,15 +68,15 @@
         <h1>My mail</h1>
 
         <p>
-          <a class="close" href="">Close</a>.
+          &nbsp;
         </p>
       </div>
     </section>
+
+    <a class="close" href="/close">Close</a>
   </div>
 
   <script src="/js/jquery.js"></script>
-  <script src="/js/jquery.fittext-1.0.js"></script>
-  <script src="/js/jquery.panelSnap.js"></script>
   <script src="/js/execute.js"></script>
 
   <script>
