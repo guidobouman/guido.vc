@@ -106,6 +106,10 @@ header #menu li {
   margin-left             : -3px;
 }
 
+.modal .close:hover {
+  transform               : rotate(45deg);
+}
+
 section {
   overflow                : hidden;
   position                : relative;
