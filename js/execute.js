@@ -11,6 +11,12 @@ jQuery(function($) {
   $('a.phone').on('click', function(e) {
     e.preventDefault();
 
+    var phone = '';
+    phone += '+31 ';
+    phone += '6 ';
+    phone += '42945687';
+    $('.modal section.phone h1').html(phone);
+
     showModal('phone');
   });
 
