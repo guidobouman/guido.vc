@@ -1,0 +1,68 @@
+==================================================================
+https://keybase.io/guidobouman
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://guido.vc
+  * I am guidobouman (https://keybase.io/guidobouman) on keybase.
+  * I have a public key with fingerprint 2884 4101 A3FA 217E 405D  03AA 28A9 9418 4FAC D659
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "01014d869202f52ca94d784c54e46a9c10be797ceb6dc21008839cd9476ea675d1db0a",
+            "fingerprint": "28844101a3fa217e405d03aa28a994184facd659",
+            "host": "keybase.io",
+            "key_id": "28a994184facd659",
+            "kid": "01014d869202f52ca94d784c54e46a9c10be797ceb6dc21008839cd9476ea675d1db0a",
+            "uid": "f131ba0bcd9301dd9951a1443a94c019",
+            "username": "guidobouman"
+        },
+        "service": {
+            "hostname": "guido.vc",
+            "protocol": "https:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1461916769,
+    "expire_in": 157680000,
+    "prev": "56d7af447d03d8cb114f7452cb019ca73e51abc2105199d028cfceadd54e425a",
+    "seqno": 9,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.53
+Comment: https://keybase.io/crypto
+
+yMIcAnicrZJbSFRBGMd3zet207J7IR2NtjCZOWfObQvswQepR7XQom3OzBw9rO5Z
+95xd09KKLOhiUZAgFBFaqVER9GAitYoEZhewELqQ+NjlJfBFUWiOFPTQY/MyzMz/
+//u+78+MLl/iC/iv73m4fWBfMO4fH+5M+A4W5uPjgmHTZiF0XIiwxY3VU+a44YhF
+hZAAIICIaoouAtGURYJ1RFUNERkxpGCdQGAwVVcJMxRKRAiApkk6oTpSFYYVVaaQ
+GgALxYJpRWtZPBa3oi7HipqGEEdjycQiVBkCMgUSxqKGdR1BDZmYUEXWubHOdjwH
+b87ADiuxbH7HD+HF9v6h/899JxZxJpSggYHBFRKAlOq6DDFESOJcAqBXN+GweBQ3
+MK6u5SbbsBMNOCq0Fgv8IWkR5mXrDfO3qCRJuDUWt12b2PX8ts51Y07Ic7nNMU/W
+xIzwb0DYsKKUx8gdSRZ3LDsqhCBXEtfyiBApUIeKqujFAjsWs+IsbHkKWVU0wJdX
+hyU5Ulaoik2EVB451YgBITJVxEMy+CQEqxLjwxleKjLUdQpEjZiEYUq98ETZS8Vh
+jVFbCPFKLq7lSMeqjWI3EWdC60jqcLrPH/BlZqR538sXyMn98+kAyZr1b/gx/2xh
+7pVZ1gyGuk9MbHrU9GB0vlffVro5a+HkyMq31/YWTV79WlowNF4RKN+NRqenc5+O
+V3+772vIPn3zTO/tgroVHwbvNK5vWdowVj+35XzLTPu7/UbO2JO5Xa9TQ+vyUlOf
+hNszCzmzs+vLvwTdrjfnCi+uHtSuda1KF66HI7deZsqh9P6cifbLbK4xvPMAfv7i
+8/jZDHMrPJQHjlRl1twMBje0Saf6+jqr5jtmCnrU7sn2yKVsKXV02fcS7Up14Q0z
+2IoHxurT+itGIhXVO/LvOXabeLqyMvl+zV358cZc/9JTXWtTH8+wmZ624SKjsrAm
+YJdN9Xac/alc+AVggDVL
+=DGOR
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/guidobouman
+
+==================================================================
