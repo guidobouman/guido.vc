@@ -59,8 +59,10 @@ section + section {
 }
 
 header {
+  background-color: #222222;
   background-image: url('../img/background.jpg');
   background-position: center;
+
   color: #dddddd;
   text-align: center;
 }
