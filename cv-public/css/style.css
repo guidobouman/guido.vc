@@ -86,7 +86,7 @@ section h1 {
   padding-top: 0.5em;
 }
 
-section p {
+section p, li {
   line-height: 1.5;
 }
 
