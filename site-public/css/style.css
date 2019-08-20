@@ -1,0 +1,43 @@
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+html {
+  background-color: black;
+  background-image: url('../img/background.jpg');
+  background-position: center;
+}
+
+body {
+  color: #dddddd;
+  font-family: 'Source Sans Pro', 'Helvetica Neue', HelveticaNeue, Helvetica, sans-serif;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 0.9em;
+}
+
+.home {
+  height: 100%;
+  display: flex;
+}
+
+.home .center {
+  margin: auto;
+}
+
+.home .center svg {
+  box-sizing: content-box;
+  padding: 10px;
+  border: 10px solid #dddddd;
+}
