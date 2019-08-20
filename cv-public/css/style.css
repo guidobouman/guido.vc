@@ -14,7 +14,7 @@ body {
   font-family: 'Source Sans Pro', 'Helvetica Neue', HelveticaNeue, Helvetica, sans-serif;
   font-weight: 300;
   font-size: 5vw;
-  line-height: 1.5em;
+  line-height: 1;
   color: #222222;
 }
 
@@ -44,6 +44,10 @@ body {
 
 h1, h2 {
   margin: 0;
+}
+
+h1 {
+  font-size: 2.5em;
 }
 
 p {
@@ -76,6 +80,14 @@ section {
   section {
     max-width: 80vw;
   }
+}
+
+section h1 {
+  padding-top: 0.5em;
+}
+
+section p {
+  line-height: 1.5;
 }
 
 section * + p {
