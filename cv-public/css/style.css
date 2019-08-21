@@ -97,3 +97,19 @@ section p, li {
 section * + p {
   margin-top: 1em;
 }
+
+.technologies  ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.technologies li + li::before {
+  content: ", ";
+}
+
+.technologies li + li:last-child::before {
+  content: "\00a0& ";
+}
