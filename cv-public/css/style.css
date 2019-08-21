@@ -6,16 +6,19 @@
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
+html {
+  background: #dddddd;
 }
 
 body {
+  margin: 3vw;
+  background: white;
   font-family: 'Source Sans Pro', 'Helvetica Neue', HelveticaNeue, Helvetica, sans-serif;
   font-weight: 300;
   font-size: 5vw;
   line-height: 1;
   color: #222222;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.15);
 }
 
 @media (min-width: 400px) {
@@ -76,7 +79,7 @@ section {
   margin: 0 auto;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 700px) {
   section {
     max-width: 80vw;
   }
