@@ -85,7 +85,8 @@ section {
   }
 }
 
-section h1 {
+section h1,
+section h2 {
   padding-top: 0.5em;
 }
 
