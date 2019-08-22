@@ -50,10 +50,10 @@ h1, h2 {
 }
 
 h1 {
-  font-size: 2.5em;
+  font-size: 2em;
 }
 
-p {
+p, ul {
   margin: 0;
 }
 
@@ -87,29 +87,27 @@ section {
 
 section h1,
 section h2 {
-  padding-top: 0.5em;
+  margin-top: 1em;
 }
 
 section p, li {
   line-height: 1.5;
 }
 
-section * + p {
+section * + p,
+section * + ul {
   margin-top: 1em;
 }
 
-.technologies  ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.technology-lists {
   display: flex;
   flex-wrap: wrap;
 }
 
-.technologies li + li::before {
-  content: ", ";
+.technology-lists .list {
+  width: 50%
 }
 
-.technologies li + li:last-child::before {
-  content: "\00a0& ";
+.technology-lists  h2 {
+  font-size: 1.1em;
 }
