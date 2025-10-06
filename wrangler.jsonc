@@ -1,0 +1,14 @@
+{
+  "name": "guido-vc",
+  "compatibility_date": "2025-10-06",
+  "assets": {
+    "directory": "./public",
+    "html_handling": "force-trailing-slash"
+  },
+
+  
+  // Routes for custom domain
+  "routes": [
+    { "pattern": "guido.vc/*", "zone_name": "guido.vc" }
+  ],
+}
