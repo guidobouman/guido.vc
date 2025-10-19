@@ -513,12 +513,13 @@
    * - Terrain scale
    * - Line thickness
    */
+  let guiInitialized = false;
   function initDebugUI() {
-    // Check for ?debug query parameter
-    const urlParams = new URLSearchParams(window.location.search);
-    if (!urlParams.has('debug')) {
+    if (guiInitialized) {
       return;
     }
+
+    guiInitialized = true;
 
     // Lazy load dat.GUI from CDN
     const script = document.createElement('script');
@@ -553,8 +554,20 @@
     document.head.appendChild(script);
   }
 
-  // Initialize debug UI if ?debug parameter is present
-  initDebugUI();
+  // Initialize debug UI on demand
+
+  // Load GUI when '?debug' query parameter is present
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('debug')) {
+    initDebugUI();
+  }
+
+  // Load GUI on '?' key press
+  window.addEventListener('keydown', (event) => {
+    if (event.key === '?') {
+      initDebugUI();
+    }
+  });
 
   // ============================================================================
   // ANIMATION LOOP
