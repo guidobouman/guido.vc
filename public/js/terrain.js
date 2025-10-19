@@ -537,13 +537,13 @@
       gui.add(config, 'terrainMode', terrainModes).name('Terrain Mode');
 
       // Contour line spacing
-      gui.add(config, 'contourSpacing', 0.05, 0.5).name('Contour Spacing');
+      gui.add(config, 'contourSpacing', 0.01, 0.5).name('Contour Spacing');
 
       // Animation speed
       gui.add(config, 'animationSpeed', 0.0, 3.0).name('Animation Speed');
 
       // Terrain scale (zoom)
-      gui.add(config, 'terrainScale', 0.5, 10.0).name('Terrain Scale');
+      gui.add(config, 'terrainScale', 0.1, 10.0).name('Terrain Scale');
 
       // Line thickness
       gui.add(config, 'lineThickness', 0.001, 0.2).name('Line Thickness');
